@@ -13,21 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.demo;
+package com.example.demo.entity;
 
 import jakarta.persistence.*;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
-/**
- * Simple JavaBean domain object representing a veterinarian.
- *
- * @author Ken Krebs
- * @author Juergen Hoeller
- * @author Sam Brannen
- * @author Arjen Poutsma
- */
 @Entity
 @Table(name = "vets")
 public class Vet {
@@ -42,33 +34,9 @@ public class Vet {
             joinColumns = @JoinColumn(name = "vet_id"),
             inverseJoinColumns = @JoinColumn(name = "specialty_id")
     )
-    private Set<Specialty> specialties;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    protected Set<Specialty> getSpecialtiesInternal() {
-        if (this.specialties == null) {
-            this.specialties = new HashSet<>();
-        }
-        return this.specialties;
-    }
-
-    protected void setSpecialtiesInternal(Set<Specialty> specialties) {
-        this.specialties = specialties;
-    }
-
-    public int getNrOfSpecialties() {
-        return getSpecialtiesInternal().size();
-    }
+    private Set<Specialty> specialties = new LinkedHashSet<>();
 
     public void addSpecialty(Specialty specialty) {
-        getSpecialtiesInternal().add(specialty);
+        this.specialties.add(specialty);
     }
-
 }
